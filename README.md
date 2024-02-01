@@ -1,12 +1,9 @@
-Certainly! Here's a sample description for your GitHub repository:
 
----
-
-# Windows 10 Optimizer
+# Athi's Simple Optimizer
 
 ## Overview
 
-Welcome to the Windows 10 Optimizer – a lightweight and user-friendly console application designed to streamline and optimize the performance of your Windows 10 system. This tool is perfect for users who want a hassle-free way to enhance their system's efficiency without delving into complex settings.
+Welcome to the Athi's Simple Optimizer – a lightweight and user-friendly console application designed to streamline and optimize the performance of your Windows 10 system. This tool is perfect for users who want a hassle-free way to enhance their system's efficiency without delving into complex settings.
 
 ## Features
 
