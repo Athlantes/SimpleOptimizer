@@ -19,9 +19,9 @@ Welcome to the Athi's Simple Optimizer – a lightweight and user-friendly conso
 
 ## How to Use
 
-1. Clone the repository to your local machine.
-2. Run the application.
-3. Follow the on-screen instructions to optimize your Windows 10 settings.
+1. Go to Release tab.
+2. Download the ".exe" file.
+3. Run the application and follow the on-screen instructions to optimize your Windows 10 settings.
 
 ## Contributions
 
