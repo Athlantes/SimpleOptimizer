@@ -1,0 +1,1700 @@
+
+@echo off
+goto check
+
+:: Run the script as administrator
+:check
+NET FILE 1>NUL 2>NUL
+if %errorlevel% neq 0 (
+echo This script must be run with administrative privileges.
+pause
+exit /b
+) else (
+goto menu
+)
+
+::Main Menu Display
+:menu
+cls
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo Athlantes's Windows Optimizer
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. LazyMan Optimizer
+echo 2. Optimizer Selector
+echo 3. Others
+echo.
+echo 4. Exit
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+choice /c 1234 /n /m "Choose one of the options above:"
+
+rem Process the user's choice
+if errorlevel 4 goto :exit
+if errorlevel 3 goto :other
+if errorlevel 2 goto :o_selector
+if errorlevel 1 goto :o_full
+
+:o_full
+cls
+echo This optimizer option will do activate all the options available. 
+echo This is for lazy people that don't want to do them manually. 
+echo I recommend you to use "Optimizer Selector" for best results.
+echo.
+echo ====================WARNING======================
+echo This can create some problems. Please do a system
+echo restore point before doing it to prevent future
+echo problems. 
+echo ====================WARNING======================
+echo Are you ready for optimization? (Y/N)
+set /p choice=
+if /i "%choice%"=="N" goto menu
+if /i "%choice%"=="Y" goto o_full_start
+
+
+:other
+cls
+echo 1. Install WinRaR
+echo 2. Install Notepad++
+echo 3. Back
+choice /c 123 /n /m "Choose one of the options above:"
+
+rem Process the user's choice
+if errorlevel 3 goto menu
+if errorlevel 2 goto install_notepadpp
+if errorlevel 1 goto install_winrar
+
+:install_winrar
+cls
+setlocal
+
+rem URL of the file to download
+set "url=https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-624.exe"
+
+rem Destination path to save the downloaded file
+set "destination=%USERPROFILE%\Downloads\winrar-x64-624.exe"
+
+rem Command to download the file using bitsadmin
+powershell -Command "& {Invoke-WebRequest -Uri '%url%' -OutFile '%destination%'}"
+
+rem Check if the download was successful
+if %errorlevel% neq 0 (
+    echo Download failed.
+    exit /b %errorlevel%
+)
+
+rem Command to open the file (replace "notepad" with the desired program)
+start "Title" "%USERPROFILE%\Downloads\winrar-x64-624.exe" "%destination%"
+
+endlocal
+pause
+goto other
+
+:install_notepadpp
+cls
+setlocal
+
+rem URL of the file to download
+set "url=https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.2/npp.8.6.2.Installer.x64.exe"
+
+rem Destination path to save the downloaded file
+set "destination=%USERPROFILE%\Downloads\npp.8.6.2.Installer.x64.exe"
+
+rem Command to download the file using Invoke-WebRequest
+powershell -Command "& {Invoke-WebRequest -Uri '%url%' -OutFile '%destination%'}"
+
+rem Check if the download was successful
+if %errorlevel% neq 0 (
+    echo Download failed.
+    exit /b %errorlevel%
+)
+
+rem Command to open the file (replace "notepad" with the desired program)
+start "Title" "%USERPROFILE%\Downloads\npp.8.6.2.Installer.x64.exe" "%destination%"
+endlocal
+pause
+goto other
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:o_selector
+cls
+echo ====================WARNING======================
+echo This can create some problems. Please do a system
+echo restore point before doing it to prevent future
+echo problems. 
+echo ====================WARNING======================
+echo Optimizing options available:
+echo 1. Visual options
+echo 2. Network options
+echo 3. System options
+echo 4. Disk Drive options
+echo 5. Apps options
+echo 6. Privacy options
+echo 7. Windows options
+echo 8. Cleaner options
+echo.
+echo 9. Back
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+choice /c 123456789 /n /m "Choose one of the options above:"
+rem Process the user's choice
+if errorlevel 9 goto menu
+if errorlevel 8 goto o_cleaner
+if errorlevel 7 goto o_windows
+if errorlevel 6 goto o_privacy
+if errorlevel 5 goto o_apps
+if errorlevel 4 goto o_disk
+if errorlevel 3 goto o_system
+if errorlevel 2 goto o_network
+if errorlevel 1 goto o_visual
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_visual
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Adjust visual effects for better performance.
+echo 2. Disable unnecessary Windows animations.
+echo 3. Change Menu Delay lower
+echo.
+echo 4. Back
+echo.
+choice /c 1234 /n /m "Select one of the options below:"
+rem Process the user's choice
+if errorlevel 4 goto o_selector
+if errorlevel 3 goto o_visual_3
+if errorlevel 2 goto o_visual_2
+if errorlevel 1 goto o_visual_1
+
+
+:o_visual_1
+cls
+:: Adjust visual effects for better performance
+echo Adjusting visual effects for better performance...
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d 2 /f
+pause
+goto o_visual
+
+:o_visual_2
+cls 
+:: Disable unnecessary Windows animations
+echo Disabling unnecessary Windows animations...
+reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d 9012038000000000 /f
+pause
+goto o_visual
+
+:o_visual_3
+cls
+:: Change Menu Delay lower
+echo Setting MenuShowDelay to 100 milliseconds
+reg add "HKCU\Control Panel\Desktop" /v MenuShowDelay /t REG_SZ /d 100 /f
+pause
+goto o_visual
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_network
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Optimize network settings
+echo 2. Clear DNS cache
+echo.
+echo 3. Back
+echo. 
+choice /c 012 /n /m "Select one of the options below:"
+rem Process the user's choice
+if errorlevel 3 goto o_selector
+if errorlevel 2 goto o_network_2
+if errorlevel 1 goto o_network_1
+
+
+:o_network_1
+cls
+:: Optimize network settings
+echo Optimizing network settings...
+netsh int tcp set global autotuninglevel=disabled
+netsh int tcp set heuristics disabled
+netsh int tcp set global rss=enabled
+netsh int tcp set global autotuninglevel=normal
+pause
+goto o_network
+
+:o_network_2
+cls 
+:: Clear DNS cache
+echo Clearing DNS cache...
+ipconfig /flushdns
+pause 
+goto o_network
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_system
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Basic Performance
+echo 2. Disable Error Reporting
+echo 3. Disable Print Service
+echo 4. Disable Fax Service
+echo 5. Disable Sticky Keys
+echo 6. Disable SmartScreen
+echo.
+echo 7. Back
+echo.
+choice /c 01234567 /n /m "Select one of the options below:"
+rem Process the user's choice
+if errorlevel 7 goto o_selector
+if errorlevel 6 goto o_system_6
+if errorlevel 5 goto o_system_5
+if errorlevel 4 goto o_system_4
+if errorlevel 3 goto o_system_3
+if errorlevel 2 goto o_system_2
+if errorlevel 1 goto o_system_1
+
+:o_system_1
+cls
+:: Change timeout lower
+echo Setting HungAppTimeout to 5000 milliseconds (5 seconds)
+reg add "HKCU\Control Panel\Desktop" /v HungAppTimeout /t REG_SZ /d 5000 /f
+
+:: Change WaitToKill lower
+echo Setting WaitToKillAppTimeout to 20000 milliseconds (20 seconds)
+reg add "HKCU\Control Panel\Desktop" /v WaitToKillAppTimeout /t REG_SZ /d 20000 /f
+
+:: Disable Low Disk Space Notification
+echo Disabling Low Disk Space Notification
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoLowDiskSpaceChecks /t REG_DWORD /d 1 /f
+
+:: Disable Shake to minimize
+echo Disabling Aero Shake
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v DisallowShaking /t REG_DWORD /d 1 /f
+
+:: Enable File Extensions
+echo Enabling Always Show File Extensions
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v HideFileExt /t REG_DWORD /d 0 /f
+
+:: Show Hidden Files
+echo Showing Hidden Files
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 1 /f
+pause
+goto o_system
+
+:o_system_2
+cls
+:: Disable Windows error reporting
+echo Disabling Windows error reporting...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
+pause
+goto o_system
+
+:o_system_3
+cls 
+:: Disable Printer
+echo Stopping Print Spooler service
+net stop spooler
+
+echo Disabling Print Spooler service
+sc config spooler start=disabled
+pause
+goto o_system
+
+:o_system_4
+cls
+:: Disable Fax
+echo Stopping Fax service
+net stop fax
+pause
+goto o_system
+
+:o_system_5
+cls
+:: Disable Sticky Keys
+echo Disabling Sticky Keys
+reg add "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags /t REG_SZ /d "506" /f
+pause
+goto o_system
+
+:o_system_6
+cls
+:: Disable SmartScreen
+echo Disabling SmartScreen
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d Off /f
+pause
+goto o_system
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_disk
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Disable System Restore
+echo 2. Disable SuperFetch
+echo 3. Disable Hibernation
+echo 4. NTFS Timestamp
+echo 5. Disable Search
+echo.
+echo 6. Back
+echo.
+choice /c 0123456 /n /m "Select one of the options below:"
+rem Process the user's choice
+if errorlevel 6 goto o_selector
+if errorlevel 5 goto o_disk_5
+if errorlevel 4 goto o_disk_4
+if errorlevel 3 goto o_disk_3
+if errorlevel 2 goto o_disk_2
+if errorlevel 1 goto o_disk_1
+
+
+:o_disk_1
+rem Disable System Restore
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v DisableSR /t REG_DWORD /d 1 /f
+
+rem Stop and disable the System Restore service
+sc stop srservice
+sc config srservice start=disabled
+
+echo System Restore has been disabled.
+pause
+goto o_disk
+
+:o_disk_2
+:: Disable SuperFetch
+echo Stopping SuperFetch service
+net stop sysmain
+
+echo Disabling SuperFetch service
+sc config sysmain start=disabled
+pause 
+goto o_disk
+
+:o_disk_3 
+:: Disable hibernation
+echo Disabling hibernation...
+powercfg /h off
+pause 
+goto o_disk 
+
+:o_disk_4
+:: Disable NTFS Timestamp
+echo Disabling last access timestamp updates
+fsutil behavior set disablelastaccess 1
+pause
+goto o_disk
+
+:o_disk_5
+echo Disabling Windows Search Service
+rem Stop and disable the Windows Search service
+sc stop WSearch
+sc config WSearch start=disabled
+
+echo Windows Search service has been disabled.
+pause
+goto o_disk
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_apps
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Disable Office Telemetry
+echo 2. Disable Mozilla Firefox Telemetry 
+echo 3. Disable Google Chrome Telemetry 
+echo 4. Disable NVIDIA Telemetry
+echo 5. Disable Visual Studio Telemetry
+echo 6. Disable Feedback and Diagnostic Telemetry
+echo 7. Disable OneDrive Telemetry
+echo 8. Disable Edge telemetry
+echo.
+echo 9. Back
+echo.
+choice /c 012345678 /n /m "Select one of the options below:"
+if errorlevel 9 goto o_selector
+if errorlevel 8 goto o_apps_8
+if errorlevel 7 goto o_apps_7
+if errorlevel 6 goto o_apps_6
+if errorlevel 5 goto o_apps_5
+if errorlevel 4 goto o_apps_4
+if errorlevel 3 goto o_apps_3
+if errorlevel 2 goto o_apps_2
+if errorlevel 1 goto o_apps_1
+
+
+:o_apps_1
+setlocal enabledelayedexpansion
+
+rem Disable Microsoft Office Telemetry
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Office\Common\ClientTelemetry" /v "DisableTelemetry" /t REG_DWORD /d 1 /f
+
+echo Microsoft Office Telemetry has been disabled.
+pause
+goto o_apps
+
+:o_apps_2 
+setlocal enabledelayedexpansion
+
+rem Disable Mozilla Firefox Telemetry
+reg add "HKLM\Software\Policies\Mozilla\Firefox" /v "DisableTelemetry" /t REG_DWORD /d 1 /f
+
+echo Mozilla Firefox Telemetry has been disabled.
+
+pause
+goto o_apps 
+
+:o_apps_3 
+setlocal enabledelayedexpansion
+
+rem Disable Google Chrome Telemetry
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v "MetricsReportingEnabled" /t REG_DWORD /d 0 /f
+
+echo Google Chrome Telemetry has been disabled.
+
+pause
+goto o_apps
+
+:o_apps_4
+setlocal enabledelayedexpansion
+
+rem Disable NVIDIA Telemetry
+reg add "HKLM\SOFTWARE\NVIDIA Corporation\NvTelemetry" /v "disable" /t REG_DWORD /d 1 /f
+
+echo NVIDIA Telemetry has been disabled.
+
+pause
+goto o_apps
+
+:o_apps_5
+setlocal enabledelayedexpansion
+
+rem Disable Visual Studio Telemetry
+reg add "HKCU\Software\Microsoft\VisualStudio\16.0\Analytics\GlobalSuppression\EqtTrace" /v "HasUserOptedOut" /t REG_DWORD /d 1 /f
+
+echo Visual Studio Telemetry has been disabled.
+
+pause
+goto o_apps
+
+:o_apps_6
+setlocal enabledelayedexpansion
+
+rem Disable Windows Feedback and Diagnostic Data
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+
+echo Windows Feedback and Diagnostic Data have been disabled.
+
+pause
+goto o_apps
+
+:o_apps_7
+setlocal enabledelayedexpansion
+
+rem Disable OneDrive Telemetry
+reg add "HKCU\Software\Microsoft\Office\OneDrive" /v "DisablePersonalSync" /t REG_DWORD /d 1 /f
+
+echo OneDrive Telemetry has been disabled.
+
+pause
+goto o_apps
+
+:o_apps_8 
+setlocal enabledelayedexpansion
+
+rem Disable Edge telemetry via Group Policy
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "UsageReportingEnabled" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "SendFeedback" /t REG_DWORD /d 0 /f
+
+echo Edge telemetry has been disabled.
+
+pause 
+goto o_apps 
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_privacy
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Disable Media Player Sharing 
+echo 2. Disable HomeGroup
+echo 3. Disable SMBv1 Protocol 
+echo 4. Disable SMBv2 Protocol 
+echo.
+echo 5. Back
+echo.
+choice /c 12345 /n /m "Select one of the options below:"
+if errorlevel 5 goto o_selector
+if errorlevel 4 goto o_privacy_4
+if errorlevel 3 goto o_privacy_3
+if errorlevel 2 goto o_privacy_2
+if errorlevel 1 goto o_privacy_1
+
+
+:o_privacy_1
+:: Disable Media Player Sharing
+echo Disabling Windows Media Player sharing
+reg add "HKCU\Software\Microsoft\MediaPlayer\Preferences" /v HME /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\MediaPlayer\Preferences" /v HMR /t REG_DWORD /d 0 /f
+pause
+goto o_privacy
+
+:o_privacy_2
+:: Disable HomeGroup
+net stop "HomeGroupProvider" /y
+sc config "HomeGroupProvider" start=disabled
+echo HomeGroup has been disabled.
+pause
+goto o_privacy
+
+:o_privacy_3
+:: Disable SMBv1/v2 Protocols
+echo Disabling SMBv1
+powershell.exe Set-SmbServerConfiguration -EnableSMB1Protocol $false
+
+
+:o_privacy_4
+:: Disable SMBv2 Protocols
+echo Disabling SMBv2
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v SMB2 /t REG_DWORD /d 0 /f
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+:o_windows
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+echo 1. System Options
+echo 2. Windows Update Options
+echo 3. Privacy Options
+echo 4. Gaming Options
+echo 5. Touch Options
+echo.
+echo 6. Back
+echo.
+choice /c 123456 /n /m "Select one of the options below:"
+if errorlevel 6 goto o_selector
+if errorlevel 5 goto o_windows_touch
+if errorlevel 4 goto o_windows_gaming
+if errorlevel 3 goto o_windows_privacy
+if errorlevel 2 goto o_windows_winupdate
+if errorlevel 1 goto o_windows_system
+
+
+:o_windows_system
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+echo 1. Enable Eco File Explorer
+echo 2. Disable My People 
+echo 3. Disable TPM Check 
+echo 4. Remove Cast to Device
+echo 5. Disable Long Paths 
+echo 6. Disable Sensor Services 
+echo 7. Enable Classic Volume Mixer
+echo 8. Enable Classic Photo Viewer
+echo.
+echo 9. Back
+echo.
+choice /c 012345678 /n /m "Select one of the options below:"
+if errorlevel 9 goto o_windows
+if errorlevel 8 goto o_windows_system_8
+if errorlevel 7 goto o_windows_system_7
+if errorlevel 6 goto o_windows_system_6
+if errorlevel 5 goto o_windows_system_5
+if errorlevel 4 goto o_windows_system_4
+if errorlevel 3 goto o_windows_system_3
+if errorlevel 2 goto o_windows_system_2
+if errorlevel 1 goto o_windows_system_1
+
+
+:o_windows_system_1
+rem Disable Quick Access and Set Default View to This PC
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "LaunchTo" /t REG_DWORD /d 1 /f
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowFrequent" /t REG_DWORD /d 0 /f
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /t REG_DWORD /d 0 /f
+
+echo Quick Access has been disabled, and default view set to This PC.
+rem Remove Search, Task View, and Weather from Taskbar
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /f
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /f
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarModeBefore" /f
+
+echo Search, Task View, and Weather have been removed from the taskbar.
+rem Disable File History
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\FileHistory" /v "Enabled" /t REG_DWORD /d 0 /f
+
+echo File History has been disabled.
+pause
+goto o_windows_system
+
+:o_windows_system_2
+:: Disable My People
+echo Disabling My People feature
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v PeopleBand /t REG_DWORD /d 0 /f
+pause
+goto o_windows_system
+
+:o_windows_system_3
+rem Disable TPM check via Group Policy
+reg add "HKLM\SOFTWARE\Policies\Microsoft\TPM" /v "OSAttr" /t REG_DWORD /d 1 /f
+
+echo TPM check has been disabled.
+pause
+goto o_windows_system
+
+:o_windows_system_4
+:: Remove Cast to Device
+echo Removing Cast to Device option
+reg delete "HKCR\*\shellex\ContextMenuHandlers\{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" /f
+pause
+goto o_windows_system
+
+:o_windows_system_5
+:: Enable Long Paths
+echo Enabling Long Paths
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
+pause
+goto o_windows_system
+
+:o_windows_system_6
+:: Disable Sensor Services
+echo Stopping Sensor Data Service
+net stop SensrSvc
+
+echo Disabling Sensor Data Service
+sc config SensrSvc start=disabled
+pause
+goto o_windows_system
+
+:o_windows_system_7
+rem Enable Classic Volume Mixer
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "UseSoundFlyout" /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "MMTaskbarMode" /t REG_DWORD /d 1 /f
+
+echo Classic Volume Mixer has been enabled.
+pause
+goto o_windows_system
+
+:o_windows_system_8
+rem Restore Classic Photo Viewer
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".jpg" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".jpeg" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".png" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".gif" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".bmp" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".tif" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Applets\Paint\Capabilities\FileAssociations" /v ".tiff" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f
+
+echo Classic Photo Viewer has been restored.
+
+pause
+goto o_windows_system
+
+
+:o_windows_winupdate
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Disable Automatic Updates 
+echo 2. Disable Microsoft Store Updates 
+echo 3. Disable Insider Service 
+echo 4. Exclude Drivers from Updates 
+echo.
+echo 5. Back
+echo.
+choice /c 12345 /n /m "Select one of the options below:"
+if errorlevel 5 goto o_windows
+if errorlevel 4 goto o_windows_winupdate_4
+if errorlevel 3 goto o_windows_winupdate_3
+if errorlevel 2 goto o_windows_winupdate_2
+if errorlevel 1 goto o_windows_winupdate_1
+
+
+:o_windows_winupdate_1
+:: Disable Windows updates
+echo Disabling Windows updates...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 1 /f
+pause
+goto o_windows_winupdate
+
+:o_windows_winupdate_2
+rem Disable Microsoft Store updates via Group Policy
+reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v "AutoDownload" /t REG_DWORD /d 2 /f
+
+echo Microsoft Store updates have been disabled.
+pause
+goto o_windows_winupdate
+
+:o_windows_winupdate_3
+rem Stop and Disable Windows Insider Service
+sc stop "wisvc"
+sc config "wisvc" start=disabled
+
+echo Windows Insider Service has been disabled.
+pause
+goto o_windows_winupdate
+
+:o_windows_winupdate_4
+rem Exclude drivers from updates via Group Policy
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Settings" /v "ExcludeWUDriversInQualityUpdate" /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\ExcludeWUDriversInQualityUpdate" /v "1" /t REG_DWORD /d 1 /f
+
+echo Drivers have been excluded from updates.
+pause
+goto o_windows_winupdate
+
+
+:o_windows_privacy
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+echo 1. Disable Cortana
+echo 2. Enhance Privacy 
+echo 3. Disable Start Menu Ads 
+echo 4. Disable Edge Discover
+echo.
+echo 5. Back
+echo.
+choice /c 12345 /n /m "Select one of the options below:"
+if errorlevel 5 goto o_windows
+if errorlevel 4 goto o_windows_privacy_4
+if errorlevel 3 goto o_windows_privacy_3
+if errorlevel 2 goto o_windows_privacy_2
+if errorlevel 1 goto o_windows_privacy_1
+
+
+:o_windows_privacy_1
+:: Disable Cortana
+echo Disabling Cortana...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f
+pause
+goto o_windows_privacy
+
+:o_windows_privacy_2
+:: Set privacy settings
+echo Setting privacy settings...
+reg add "HKCU\Control Panel\Desktop" /v "ScreenSaveActive" /t REG_SZ /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoInstrumentation" /t REG_DWORD /d 1 /f
+
+rem Disable News and Interests on the taskbar
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Feeds" /v "ShellFeeds_TaskbarIconVisibility" /t REG_DWORD /d 0 /f
+
+echo News and Interests on the taskbar has been disabled.
+
+pause
+goto o_windows_privacy
+
+:o_windows_privacy_3
+:: Disable Start Menu Ads
+echo Disabling Start Menu Ads
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SystemPaneSuggestionsEnabled /t REG_DWORD /d 0 /f
+
+pause
+goto o_windows_privacy
+
+
+:o_windows_privacy_4
+rem Disable Edge Discover Bar
+reg add "HKCU\Software\Policies\Microsoft\Edge" /v "ShowFeedView" /t REG_DWORD /d 0 /f
+
+echo Edge Discover Bar has been disabled.
+pause
+goto o_windows_privacy
+
+
+:o_windows_gaming
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Enable Gaming Mode
+echo 2. Disable Xbox Live 
+echo 3. Disable Game Bar
+echo.
+echo 4. Back
+echo.
+choice /c 1234 /n /m "Select one of the options below:"
+if errorlevel 4 goto o_windows
+if errorlevel 3 goto o_windows_gaming_3
+if errorlevel 2 goto o_windows_gaming_2
+if errorlevel 1 goto o_windows_gaming_1
+
+
+:o_windows_gaming_1
+:: Enable Gaming Mode
+echo Enabling Game Mode
+reg add "HKCU\Software\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 1 /f
+pause 
+goto o_windows_gaming
+
+:o_windows_gaming_2
+:: Disable Xbox Live 
+echo Disabling Xbox Live and Game Bar
+reg add "HKCU\System\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AudioCaptureEnabled /t REG_DWORD /d 0 /f
+pause 
+goto o_windows_gaming
+
+:o_windows_gaming_3
+echo Disabling Game Bar
+reg add "HKCU\Software\Microsoft\GameBar" /v UseNexusForGameBarEnabled /t REG_DWORD /d 0 /f
+pause 
+goto o_windows_gaming
+
+
+:o_windows_touch
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Disable Windows Ink 
+echo 2. Disable Spell Checking 
+echo 3. Disable Cloud Clipboard
+echo.
+echo 4. Back
+echo.
+choice /c 1234 /n /m "Select one of the options below:"
+if errorlevel 4 goto o_windows
+if errorlevel 3 goto o_windows_touch_3
+if errorlevel 2 goto o_windows_touch_2
+if errorlevel 1 goto o_windows_touch_1
+
+
+:o_windows_touch_3
+rem Disable Cloud Clipboard
+reg add "HKCU\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Clipboard" /v "RoamingEnabled" /t REG_DWORD /d 0 /f
+
+echo Cloud Clipboard has been disabled.
+pause
+goto o_windows_touch
+
+:o_windows_touch_2
+:: Disable Spell Checking
+echo Disabling Spell Checking
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{C247EF73-DBE0-4B4C-8CCB-1121917A5672}" /v Value /t REG_DWORD /d 0 /f
+pause
+goto o_windows_touch
+
+:o_windows_touch_1
+:: Disable Windows Ink
+echo Disabling Windows Ink
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\PenWorkspace" /v AllowWindowsInkWorkspace /t REG_DWORD /d 0 /f
+pause
+goto o_windows_touch
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+:o_cleaner
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Windows Cleaner
+echo 2. Google Chrome Cleaner
+echo 3. Mozilla Firefox Cleaner
+echo 4. Microsoft Edge Cleaner
+echo.
+echo 5. Back
+echo.
+choice /c 12345 /n /m "Select one of the options below:"
+if errorlevel 5 goto o_selector
+if errorlevel 4 goto o_cleaner_edge
+if errorlevel 3 goto o_cleaner_mozilla
+if errorlevel 2 goto o_cleaner_chrome
+if errorlevel 1 goto o_cleaner_windows
+
+
+:o_cleaner_windows
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Temporary Files
+echo 2. BSOD Minidumps
+echo 3. Error Reports
+echo 4. Empty Recycle Bin
+echo.
+echo 5. Back
+echo.
+choice /c 12345 /n /m "Select one of the options below:"
+if errorlevel 5 goto o_cleaner
+if errorlevel 4 goto o_cleaner_windows_4
+if errorlevel 3 goto o_cleaner_windows_3
+if errorlevel 2 goto o_cleaner_windows_2
+if errorlevel 1 goto o_cleaner_windows_1
+
+
+:o_cleaner_windows_1
+rem Run Disk Cleanup for temporary files
+cleanmgr /sagerun:1
+
+echo Temporary files have been cleared.
+pause
+goto o_cleaner_windows
+
+:o_cleaner_windows_2
+rem Clear BSOD Minidumps
+del /F /Q %SystemRoot%\Minidump\*
+
+echo BSOD Minidumps have been cleared.
+
+pause
+goto o_cleaner_windows
+
+:o_cleaner_windows_3
+rem Run Disk Cleanup for system files including error reports
+cleanmgr /sagerun:2
+
+echo Error reports have been cleared.
+
+pause
+goto o_cleaner_windows
+
+:o_cleaner_windows_4
+setlocal
+
+rem Empty Recycle Bin
+rd /s /q C:\$Recycle.Bin
+
+echo Recycle Bin has been emptied.
+
+pause
+goto o_cleaner_windows
+
+:o_cleaner_chrome
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Cache 
+echo 2. Cookies 
+echo 3. History
+echo 4. Session
+echo 5. Passwords
+echo.
+echo 6. Back
+echo.
+choice /c 123456 /n /m "Select one of the options below:"
+if errorlevel 6 goto o_cleaner
+if errorlevel 5 goto o_cleaner_chrome_5
+if errorlevel 4 goto o_cleaner_chrome_4
+if errorlevel 3 goto o_cleaner_chrome_3
+if errorlevel 2 goto o_cleaner_chrome_2
+if errorlevel 1 goto o_cleaner_chrome_1
+
+
+:o_cleaner_chrome_1
+setlocal
+
+rem Check if Chrome is installed
+where chrome.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Chrome is not installed.
+    pause
+    exit /b
+)
+
+rem Clear Chrome data
+del /q /s "%LocalAppData%\Google\Chrome\User Data\Default\Cache\*.*"
+
+echo Chrome data has been cleared.
+pause
+goto o_cleaner_chrome
+
+:o_cleaner_chrome_2
+setlocal
+
+rem Check if Chrome is installed
+where chrome.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Chrome is not installed.
+    pause
+    exit /b
+)
+
+rem Clear Chrome data
+del /q /s "%LocalAppData%\Google\Chrome\User Data\Default\Cookies"
+
+echo Chrome data has been cleared.
+pause
+goto o_cleaner_chrome
+
+:o_cleaner_chrome_3
+setlocal
+
+rem Check if Chrome is installed
+where chrome.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Chrome is not installed.
+    pause
+    exit /b
+)
+
+rem Clear Chrome data
+del /q /s "%LocalAppData%\Google\Chrome\User Data\Default\History"
+
+echo Chrome data has been cleared.
+pause
+goto o_cleaner_chrome
+
+:o_cleaner_chrome_4
+setlocal
+
+rem Check if Chrome is installed
+where chrome.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Chrome is not installed.
+    pause
+    exit /b
+)
+
+rem Clear Chrome data
+del /q /s "%LocalAppData%\Google\Chrome\User Data\Default\Sessions\*.*"
+
+echo Chrome data has been cleared.
+pause
+goto o_cleaner_chrome
+
+:o_cleaner_chrome_5
+setlocal
+
+rem Check if Chrome is installed
+where chrome.exe >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Chrome is not installed.
+    pause
+    exit /b
+)
+
+rem Clear Chrome data
+del /q /s "%LocalAppData%\Google\Chrome\User Data\Default\Login Data"
+
+echo Chrome data has been cleared.
+pause
+goto o_cleaner_chrome
+
+:o_cleaner_mozilla
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Cache 
+echo 2. Cookies 
+echo 3. History
+echo 4. Data 
+echo 5. Session
+echo 6. Passwords
+echo.
+echo 7. Back
+echo.
+choice /c 1234567 /n /m "Select one of the options below:"
+if errorlevel 7 goto o_cleaner
+if errorlevel 6 goto o_cleaner_mozilla_6
+if errorlevel 5 goto o_cleaner_mozilla_5
+if errorlevel 4 goto o_cleaner_mozilla_4
+if errorlevel 3 goto o_cleaner_mozilla_3
+if errorlevel 2 goto o_cleaner_mozilla_2
+if errorlevel 1 goto o_cleaner_mozilla_1
+
+
+:o_cleaner_mozilla_1
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%FirefoxProfilePath%\*.*") do (
+    rmdir /s /q "%%i\cache"
+)
+
+echo Mozilla Firefox Cache has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+:o_cleaner_mozilla_2
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%FirefoxProfilePath%\*.*") do (
+    del /q /f "%%i\cookies.sqlite"
+)
+
+echo Mozilla Firefox Cookies has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+:o_cleaner_mozilla_3
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%FirefoxProfilePath%\*.*") do (
+    del /q /f "%%i\places.sqlite"
+)
+
+echo Mozilla Firefox History has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+:o_cleaner_mozilla_4
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Mozilla Firefox data
+set "FirefoxProfilePath=%APPDATA%\Mozilla\Firefox\Profiles"
+
+echo Mozilla Firefox Data has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+:o_cleaner_mozilla_5
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Session Data
+del /q /f "%FirefoxProfilePath%\sessionstore.jsonlz4"
+
+echo Mozilla Firefox Session has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+:o_cleaner_mozilla_6
+setlocal enabledelayedexpansion
+
+rem Check if Mozilla Firefox is installed
+reg query "HKLM\Software\Mozilla\Mozilla Firefox" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Mozilla Firefox is installed.
+) else (
+    echo Mozilla Firefox is not installed.
+)
+
+rem Clear Passwords
+del /q /f "%APPDATA%\Mozilla\Firefox\Profiles\*.logins.json"
+
+echo Mozilla Firefox Passwords has been cleared.
+
+pause
+goto o_cleaner_mozilla
+
+
+
+:o_cleaner_edge
+cls
+echo Optimizing options available:
+echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+echo 1. Cache 
+echo 2. Cookies
+echo 3. History
+echo 4. Session
+echo 5. Data
+echo 6. Passwords
+echo.
+echo 7. Back
+echo.
+choice /c 1234567 /n /m "Select one of the options below:"
+if errorlevel 7 goto o_cleaner
+if errorlevel 6 goto o_cleaner_edge_6
+if errorlevel 5 goto o_cleaner_edge_5
+if errorlevel 4 goto o_cleaner_edge_4
+if errorlevel 3 goto o_cleaner_edge_3
+if errorlevel 2 goto o_cleaner_edge_2
+if errorlevel 1 goto o_cleaner_edge_1
+
+
+:o_cleaner_edge_1
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%EdgeProfilePath%\*.*") do (
+    rmdir /s /q "%%i\Cache"
+)
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+:o_cleaner_edge_2
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%EdgeProfilePath%\*.*") do (
+    rmdir /s /q "%%i\Cookies"
+)
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+:o_cleaner_edge_3
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+
+rem Clear Microsoft Edge data
+set "EdgeProfilePath=%LOCALAPPDATA%\Microsoft\Edge\User Data"
+
+rem Clear Cache, Cookies, and History
+for /d %%i in ("%EdgeProfilePath%\*.*") do (
+    rmdir /s /q "%%i\History"
+)
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+:o_cleaner_edge_4
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+
+rem Clear Session Data
+del /q /f "%EdgeProfilePath%\Default\Session Storage\*.*"
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+:o_cleaner_edge_5
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+
+rem Clear Microsoft Edge data
+set "EdgeProfilePath=%LOCALAPPDATA%\Microsoft\Edge\User Data"
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+:o_cleaner_edge_6
+setlocal enabledelayedexpansion
+
+rem Check if Microsoft Edge is installed
+reg query "HKLM\SOFTWARE\Microsoft\Edge" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo Microsoft Edge is installed.
+) else (
+    echo Microsoft Edge is not installed.
+    goto o_cleaner
+)
+rem Clear Passwords
+del /q /f "%EdgeProfilePath%\Default\Login Data"
+
+echo Microsoft Edge data has been cleared.
+
+pause
+goto o_cleaner_edge
+
+::=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+
+
+
+
+
+
+
+:o_full_start
+cls
+:: Disable unnecessary services
+echo Disabling unnecessary services...
+sc config "wuauserv" start=disabled
+sc config "wsearch" start=disabled
+sc config "Themes" start=disabled
+sc config "DiagTrack" start=disabled
+sc config "SensrSvc" start=disabled
+
+:: Set power plan to high performance
+echo Setting power plan to High Performance...
+powercfg /setactive SCHEME_MIN
+
+:: Clear temporary files
+echo Clearing temporary files...
+del /q /s %SystemRoot%\Temp
+del /q /s %TEMP%
+
+:: Disable hibernation--
+echo Disabling hibernation...
+powercfg /h off
+
+:: Disable remote assistance
+echo Disabling remote assistance...
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Remote Assistance" /v "fAllowToGetHelp" /t REG_DWORD /d 0 /f
+
+:: Disable Windows error reporting
+echo Disabling Windows error reporting...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
+
+:: Disable unnecessary scheduled tasks
+echo Disabling unnecessary scheduled tasks...
+schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /Disable
+schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /Disable
+
+:: Clean up the registry
+echo Cleaning up the registry...
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" /f
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate" /v "UpdateExeVolatile" /f
+
+:: Optimize network settings
+echo Optimizing network settings...
+netsh int tcp set global autotuninglevel=disabled
+netsh int tcp set heuristics disabled
+netsh int tcp set global rss=enabled
+netsh int tcp set global autotuninglevel=normal
+
+:: Clear DNS cache
+echo Clearing DNS cache...
+ipconfig /flushdns
+
+:: Disable unnecessary startup programs
+echo Disabling unnecessary startup programs...
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "UnnecessaryProgram" /t REG_SZ /d "disabledProgram.exe" /f
+
+:: Disable telemetry and data collection
+echo Disabling telemetry and data collection...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d 0 /f
+
+:: Disable Cortana--
+echo Disabling Cortana...
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f
+
+:: Set privacy settings
+echo Setting privacy settings...
+reg add "HKCU\Control Panel\Desktop" /v "ScreenSaveActive" /t REG_SZ /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoInstrumentation" /t REG_DWORD /d 1 /f
+
+:: Disable unnecessary Windows features
+echo Disabling unnecessary Windows features...
+dism.exe /Online /Disable-Feature /FeatureName:Internet-Explorer-Optional-amd64 /quiet
+dism.exe /Online /Disable-Feature /FeatureName:WindowsMediaPlayer /quiet
+dism.exe /Online /Disable-Feature /FeatureName:Print-Foundation-Features /quiet
+dism.exe /Online /Disable-Feature /FeatureName:RemoteAssistance /quiet
+dism.exe /Online /Disable-Feature /FeatureName:FaxServicesClientPackage /quiet
+
+:: Disable Windows Defender
+echo Disabling Windows Defender...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f
+
+:: Disable Windows updates
+echo Disabling Windows updates...
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 1 /f
+
+:: Adjust visual effects for better performance--
+echo Adjusting visual effects for better performance...
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d 2 /f
+
+:: Disable unnecessary Windows animations--
+echo Disabling unnecessary Windows animations...
+reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d 9012038000000000 /f
+
+:: Set a custom swap file size
+echo Setting a custom swap file size...
+wmic pagefileset create name="C:\pagefile.sys"
+
+:: Disable Windows Defender notification icon
+echo Disabling Windows Defender notification icon...
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsDefender" /t REG_SZ /d "C:\Program Files\Windows Defender\MSASCui.exe" /f
+
+:: Change timeout lower--
+echo Setting HungAppTimeout to 5000 milliseconds (5 seconds)
+reg add "HKCU\Control Panel\Desktop" /v HungAppTimeout /t REG_SZ /d 5000 /f
+
+:: Change WaitToKill lower--
+echo Setting WaitToKillAppTimeout to 20000 milliseconds (20 seconds)
+reg add "HKCU\Control Panel\Desktop" /v WaitToKillAppTimeout /t REG_SZ /d 20000 /f
+
+:: Change Menu Delay lower--
+echo Setting MenuShowDelay to 100 milliseconds
+reg add "HKCU\Control Panel\Desktop" /v MenuShowDelay /t REG_SZ /d 100 /f
+
+:: Disable Low Disk Space Notification--
+echo Disabling Low Disk Space Notification
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoLowDiskSpaceChecks /t REG_DWORD /d 1 /f
+
+:: Disable Shake to minimize--
+echo Disabling Aero Shake
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v DisallowShaking /t REG_DWORD /d 1 /f
+
+:: Enable File Extensions--
+echo Enabling Always Show File Extensions
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v HideFileExt /t REG_DWORD /d 0 /f
+
+:: Show Hidden Files--
+echo Showing Hidden Files
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 1 /f
+
+:: Disable Printer--
+echo Stopping Print Spooler service
+net stop spooler
+
+echo Disabling Print Spooler service
+sc config spooler start=disabled
+
+:: Disable Fax--
+echo Stopping Fax service
+net stop fax
+
+echo Disabling Fax service
+sc config fax start=disabled
+
+:: Disable SmartScreen--
+echo Disabling SmartScreen
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d Off /f
+
+:: Disable SuperFetch--
+echo Stopping SuperFetch service
+net stop sysmain
+
+echo Disabling SuperFetch service
+sc config sysmain start=disabled
+
+:: Disable NTFS Timestamp--
+echo Disabling last access timestamp updates
+fsutil behavior set disablelastaccess 1
+
+:: Disable Media Player Sharing--
+echo Disabling Windows Media Player sharing
+reg add "HKCU\Software\Microsoft\MediaPlayer\Preferences" /v HME /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\MediaPlayer\Preferences" /v HMR /t REG_DWORD /d 0 /f
+
+:: Disable SMBv1/v2 Protocols--
+echo Disabling SMBv1
+powershell.exe Set-SmbServerConfiguration -EnableSMB1Protocol $false
+
+echo Disabling SMBv2
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v SMB2 /t REG_DWORD /d 0 /f
+
+:: Disable My People--
+echo Disabling My People feature
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v PeopleBand /t REG_DWORD /d 0 /f
+
+:: Enable Long Paths--
+echo Enabling Long Paths
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
+
+:: Disable Sensor Services--
+echo Stopping Sensor Data Service
+net stop SensrSvc
+
+echo Disabling Sensor Data Service
+sc config SensrSvc start=disabled
+
+:: Remove Cast to Device--
+echo Removing Cast to Device option
+reg delete "HKCR\*\shellex\ContextMenuHandlers\{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" /f
+
+:: Disable Insider Service
+echo Stopping Windows Insider Service
+net stop wisvc
+
+echo Disabling Windows Insider Service
+sc config wisvc start=disabled
+
+:: Disable Biometrics
+echo Disabling Biometrics
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Biometrics" /v Enabled /t REG_DWORD /d 0 /f
+
+:: Disable Geolocation
+echo Disabling Geolocation
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v Value /t REG_DWORD /d 0 /f
+
+:: Disable Share apps Across Devices
+echo Disabling Share Apps Across Devices
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\AppRepo" /v PublishUserOverride /t REG_DWORD /d 0 /f
+
+:: Disable Start Menu Ads
+echo Disabling Start Menu Ads
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SystemPaneSuggestionsEnabled /t REG_DWORD /d 0 /f
+
+:: Enable Gaming Mode
+echo Enabling Game Mode
+reg add "HKCU\Software\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 1 /f
+
+:: Disable Xbox Live and Game Bar
+echo Disabling Xbox Live and Game Bar
+reg add "HKCU\System\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AudioCaptureEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\GameBar" /v UseNexusForGameBarEnabled /t REG_DWORD /d 0 /f
+
+:: Disable Windows Ink
+echo Disabling Windows Ink
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\PenWorkspace" /v AllowWindowsInkWorkspace /t REG_DWORD /d 0 /f
+
+:: Disable Spell Checking
+echo Disabling Spell Checking
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\{C247EF73-DBE0-4B4C-8CCB-1121917A5672}" /v Value /t REG_DWORD /d 0 /f
+
+:: --------Fix common reg issues--------
+echo Fixing common registry issues
+
+:: Task Manager
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /t REG_DWORD /d 0 /f
+
+:: Command Prompt
+reg delete "HKCU\Software\Policies\Microsoft\Windows\System" /v DisableCMD /f
+
+:: Control Panel
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoControlPanel /f
+
+:: Folder Options
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 1 /f
+
+:: Run Dialog
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoRun /f
+
+:: Right-Click Menu
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoViewContextMenu /f
+
+:: Windows Firewall
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile" /v EnableFirewall /t REG_DWORD /d 1 /f
+
+:: Registry Editor
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableRegistryTools /f
+:: --------Fix common reg issues--------
+
+:: Update system files
+echo Updating system files...
+sfc /scannow
+
+::Restart explorer
+echo Restarting Explorer to apply changes...
+taskkill /f /im explorer.exe
+start explorer.exe
+
+echo Optimization complete.
+pause
+
+
+
+
+
+
+
+
+
+
+:exit
+cls
+echo Are you sure you want to exit (Y/N)?
+set /p choice=
+if /i "%choice%"=="Y" exit /b
+if /i "%choice%"=="N" goto :menu
